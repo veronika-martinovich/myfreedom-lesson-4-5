@@ -2,14 +2,14 @@ import React from "react";
 
 export const PostPreview = props => {
   return (
-    <li className="posts_item">
+    <li className="posts_post-preview">
       <h3
-        className="posts_heading posts_heading__preview"
+        className="post-preview_heading"
         onClick={() => props.onClick()}
       >
         {props.postTitle}
       </h3>
-      <p className="posts_author posts_author__preview">{props.postAuthor}</p>
+      <p className="post-preview_author">{props.postAuthor}</p>
     </li>
   );
 };

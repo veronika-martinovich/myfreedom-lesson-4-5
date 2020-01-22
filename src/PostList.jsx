@@ -6,10 +6,8 @@ export class PostList extends React.Component {
   state = {
     posts: null,
     users: null,
-    postToOpen: {
-      id: null,
-      authorId: null
-    }
+    postToOpen: null,
+    postToOpenAuthor: null
   };
 
   async componentDidMount() {
@@ -21,7 +19,6 @@ export class PostList extends React.Component {
       "https://jsonplaceholder.typicode.com/users"
     );
     const users = await responseUsers.json();
-    console.log(this.state.posts);
 
     this.setState({
       posts,
@@ -33,15 +30,20 @@ export class PostList extends React.Component {
     if (!this.state.posts || !this.state.users) return "...Loading";
     if (this.state.postToOpen) {
       return (
-        // Здесь для компонента FullPost вместо posts и users приходит undefined, 
-        // хотя ниже по коду вместо posts и users приходят нормальные массивы
         <FullPost
           post={this.state.posts.find(
-            post => post.id === this.state.postToOpen.id
+            post => post.id === this.state.postToOpen
           )}
           postAuthor={this.state.users.find(
-              user => user.id === this.state.postToOpen.authorId
+              user => user.id === this.state.postToOpenAuthor
             )
+          }
+          onBackClick={()=>{
+            this.setState({
+              postToOpen: null,
+              postToOpenAuthor: null
+            })
+          }
           }
         />
       )};
@@ -57,10 +59,8 @@ export class PostList extends React.Component {
               }
               onClick={() => {
                 this.setState({
-                  postToOpen: {
-                    id: item.id,
-                    authorId: item.userId
-                  }
+                  postToOpen: item.id,
+                  postToOpenAuthor: item.userId
                 });
               }}
             />

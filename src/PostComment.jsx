@@ -2,9 +2,9 @@ import React from "react";
 
 export const PostComment = (props) => {
   return (
-    <div className="posts_comment">
-      <p className="posts_comment-author">{props.commentAuthor}</p>
-      <p className="posts_comment-body">{props.commentBody}</p>
+    <div className="full-post_comment-item">
+      <p className="full-post_comment-author">{props.commentAuthor}</p>
+      <p className="full-post_comment-body">{props.commentBody}</p>
     </div>
   )
 }

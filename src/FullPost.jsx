@@ -37,17 +37,17 @@ export class FullPost extends React.Component {
     }
 
     return (
-      <div>
-        <h5 className="posts_heading posts_heading__full">
-          {this.props.post.title}
-        </h5>
-        <p className="posts_author posts_author__full">
-          {this.props.postAuthor.name}
-        </p>
-        <p className="posts_body">
-          {this.props.post.body}
-        </p>
-        {comments}
+      <div className="posts_full-post">
+        <button className="full-post_button" 
+        onClick={() => this.props.onBackClick()}
+        >
+          Back
+        </button>
+        <h5 className="full-post_heading">{this.props.post.title}</h5>
+        <p className="full-post_author">Author: {this.props.postAuthor.name}</p>
+        <p className="full-post_body">{this.props.post.body}</p>
+        <br />
+        <div className="full-post_comments">{comments}</div>
       </div>
     );
   }
