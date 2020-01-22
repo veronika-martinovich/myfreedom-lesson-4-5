@@ -1,11 +1,13 @@
 import React from "react";
 import { PostComment } from "./PostComment";
+import { AuthorComments } from "./AuthorComments";
 
 export class FullPost extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: null
+      comments: null,
+      commentAuthorToOpen: null
     };
   }
 
@@ -32,21 +34,43 @@ export class FullPost extends React.Component {
             key={item.id}
             commentAuthor={item.email}
             commentBody={item.body}
+            onCommentsAuthorClick={() => {
+              this.setState({
+                commentAuthorToOpen: item.email
+              });
+            }}
           />
         ));
     }
 
+    if (this.state.commentAuthorToOpen) {
+      return (
+        <AuthorComments
+          commentAuthor={this.state.commentAuthorToOpen}
+          authorComments={this.state.comments.filter(
+            item => item.email === this.state.commentAuthorToOpen
+          )}
+          onBackClick={() => {
+            this.setState({
+              commentAuthorToOpen: null
+            })
+          }}
+        />
+      );
+    }
     return (
       <div className="posts_full-post">
-        <button className="full-post_button" 
-        onClick={() => this.props.onBackClick()}
+        <button
+          className="full-post_button"
+          onClick={() => this.props.onBackClick()}
         >
           Back
         </button>
-        <h5 className="full-post_heading">{this.props.post.title}</h5>
+        <h2 className="full-post_heading">{this.props.post.title}</h2>
         <p className="full-post_author">Author: {this.props.postAuthor.name}</p>
-        <p className="full-post_body">{this.props.post.body}</p>
+        <p className="full-post_body">Post: {this.props.post.body}</p>
         <br />
+        <h3 className="full-post_heading">Comments</h3>
         <div className="full-post_comments">{comments}</div>
       </div>
     );

@@ -1,13 +1,15 @@
 import React from "react";
 import { PostPreview } from "./PostPreview";
 import { FullPost } from "./FullPost";
+import { AuthorPosts } from "./AuthorPosts";
 
 export class PostList extends React.Component {
   state = {
     posts: null,
     users: null,
     postToOpen: null,
-    postToOpenAuthor: null
+    postToOpenAuthor: null,
+    authorToOpen: null
   };
 
   async componentDidMount() {
@@ -43,8 +45,23 @@ export class PostList extends React.Component {
               postToOpen: null,
               postToOpenAuthor: null
             })
-          }
-          }
+          }}
+        />
+      )};
+    if (this.state.authorToOpen) {
+      return (
+        <AuthorPosts
+          author={this.state.users.find(
+            user => user.id === this.state.authorToOpen
+          )}
+          authorPosts={this.state.posts.filter(
+            post => post.userId === this.state.authorToOpen
+          )}
+          onBackClick={()=>{
+            this.setState({
+              authorToOpen: null
+            })
+          }}
         />
       )};
     return (
@@ -57,11 +74,16 @@ export class PostList extends React.Component {
               postAuthor={
                 this.state.users.find(user => user.id === item.userId).name
               }
-              onClick={() => {
+              onHeadingClick={() => {
                 this.setState({
                   postToOpen: item.id,
                   postToOpenAuthor: item.userId
                 });
+              }}
+              onAuthorClick={() => {
+                this.setState({
+                  authorToOpen: item.userId
+                })
               }}
             />
           ))}
